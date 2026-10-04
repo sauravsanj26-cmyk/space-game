@@ -280,4 +280,49 @@ canvas {
     z-index: 15;
     opacity: 0;
     pointer-events: none;
+    padding: 10px 18px;
+    border: 1px solid rgba(90, 230, 255, 0.3);
+    border-radius: 8px;
+    background: rgba(3, 10, 25, 0.88);
+    color: #9ff5ff;
+    letter-spacing: 2px;
+    font-size: 11px;
+    transition: 0.3s;
+}
+#toast.show {
+    opacity: 1;
+    transform: translateX(-50%, 0);
+}
+/* =========================
+   MOBILE
+========================= */
+@media (max-width:700px) {
+    #hud {
+        top: 8px;
+        left: 8px;
+        right: 8px;
+        gap: 5px;
+    }
+    .hudBox {
+        min-width: 65px;
+        padding: 5px 7px;
+    }
+    .hudBox span,
+    .healthWrap span {
+        font-size: 7px;
+    }
+    .hudBox strong {
+        font-size: 13px;
+    }
+    .healthWrap {
+        min-width: 120px;
+        padding: 5px 7px;
+    }
+    #pauseBtn {
+        width: 35px;
+        height: 35px;
+    }
+    .panel {
+        padding: 30px 20px;
+    }
 }
