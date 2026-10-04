@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="gameShell">
+        <canvas id="gameCanvas"></canvas>
+        <!--HUD-->
+        <div id="hud">
+            <div class="hudBox">
+                <span>SCORE</span>
+                <strong id="score">0</strong>
+             </div>
+            <div class="hudbox">
+              <span>HIGH SCORE</span>
+              <strong id="highScore">0</strong>
+             </div>    
+             <div class="hudBox">
+                <span>WAVE</spam>
+                <strong id="wave">1</strong>
+             </div>
+             <div class="hudBox">
+                <span>LIVES</span>
+                <strong id="lives">3</strong>
+             </div>
+             <div class="healthWrap">
+                <span>SHILD</span>
+                <div class="healthBar">
+                    <div id="healthFill"></div>
+                </div>
+             </div>
+             <button id="pauseBtn">ii</button>
+        </div>
+        <!--BOSS HEALTH-->
+        <div id="bossBar" class="hidden">
+            <div class="bossTitle">
+                ⚠ BOSS INCOMING ⚠
+            </div>
+            <div class="bossHealth">
+                <div id="bossHealthFill"></div>
+            </div>
+        </div>
+        <!--START SCREEN-->
+        <div id="startScreen" class="overlay">
+            <div class="panel">
+                <div class="logo"
+                COSMIC
+                <span>ASSAULT</span>
+            </div>
+            <p class="subtitle">
+                DEFEND THE GALAXY
+            </p>
+            <div class="instructions">
+                <p>
+                    <b>W A S D / ARROWS</b> - Move
+                </p>
+                <p>
+                    <b>SPACE</b> - Fire
+                </p>
+                <p>
+                    <b>P</b> - pause
+                </p>
+                <p>
+                    <b>Mouse / Touch</b> - Move & Fire
+                </p>
+            </div>
+            <button id="startBtn" class="mainBtn">
+                LUNCH MISSION
+            </button>
+        </div> 
+         <!-- PAUSE -->
+          <div id="pauseScreen" class="overlay hidden">
+            <div class="panel">
+                <h1>MISSION PAUSED</h1>
+                <p>
+                   The fleet is waiting for your command.
+                </p>
+                 <button id="resumeBtn" class="mainBtn">
+                        RESUME
+                    </button>
+            </div>
+          </div>
+          <!-- GAME OVER -->
+           <div id="gameOverScreen" class="overlay hidden">
+             <div class="panel">
+                <h1>MISSION FAILED</h1>
+                <p>Final Score</p>
+                <div id="finalScore">0</div>
+                <p id="recordText"></p>
+                <button id="restartBtn" class="mainBtn">
+                    RESTART MISSION
+                </button>
+             </div>
+           </div>
+           <!-- VICTORY -->
+            <div id="victoryScreen" class="overlay hidden">
+                <div class="panel">
+                    <h1>GALAXY SAVED</h1>
+                    <p>
+                        You destroyed the enemy command ship.
+                    </p>
+                    <div id="victoryScore">0</div>
+                    <button id="victoryRestartBtn" class="mainBtn">
+                        PLAY AGAIN
+                    </button>
+                </div>
+            </div>
+            <div id="toast"></div>
+        
+    </div>
+   <script src="script.js"></script>
+      
+</body>
+</html>

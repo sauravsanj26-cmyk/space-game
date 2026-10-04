@@ -1,0 +1,283 @@
+{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #02030a;
+    font-family: "Segoe UI",Arial, sans-serif;
+    color: white;
+}
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#gameShell {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at center,
+            #10152b 0%
+            #03040c 55%
+            #000 100%
+        );
+}
+canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    cursor: crosshair;
+}
+/* =========================
+   HUD
+========================= */
+#hud {
+    position: absolute;
+    top: 18px;
+    left: 18px;
+    right: 18px
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    z-index: 10;
+
+    pointer-events: none;
+}
+.hudBox,
+.healthWrap,
+#pauseBtn {
+    background: rgba(4, 8, 22, 0.78);
+    border: 1px solid rgba(93, 221, 225, 0.35);
+    box-shadow:
+       0 0 18px rgba(0, 200, 225, 0.08);
+    backdrop-filter: blur(8px);
+}
+.hubBox {
+    min-width: 105px;
+    padding: 7px 12px;
+    boarder-radius: 8px;
+}
+.hudBox span,
+.healthWrap span {
+    display: block;
+    color: #83a9c7;
+    font-size: 9px;
+    letter-spacing: 2px;
+}
+.hudBox strong {
+    display: block;
+    margin-top: 2px;
+    color: white;
+    font-size: 18px;
+}
+.healthWrap {
+    min-width: 170px;
+    padding: 7px 12px;
+    border-radius: 8px;
+}
+.healthBar,
+.bossHealth {
+    width: 100%;
+    height: 8px;
+    margin-top: 5px;
+    overflow: hidden;
+    backgound: #1a1b2b;
+    border-radius: 99px;
+}
+#healthFill,
+#bossHealthFill {
+    height: 100%;
+    width: 100%;
+    background:
+        linear-gradient(
+            90deg,
+            #27e6ff,
+            #79ffad
+        );
+    boarder-radius: inherit;
+    transition: width 0.15s linear;
+    box-shadow:
+          0 0 10px #27e6ff,
+}
+#pauseBtn {
+    margin-left: auto;
+    width: 43px;
+    height: 43px;
+    border-radius: 9px;
+    color: white;
+    font-size: 17px;
+    pointer-events: auto;
+    cursor: pointer;
+}
+/* =========================
+   OVERLAYS
+========================= */
+.overlay {
+    position:absolute;
+    inset: 0;
+    z-index: 20;
+    display: grid;
+    place-items: center;
+    background: rgba(0, 0, 8, 0.55);
+    backdrop-filter: blur(5px);
+}
+.hidden {
+    display: none !important;
+}
+.panel {
+    width: min(560px, 90%);
+    padding: 42px 38px;
+    text-align: center;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(11, 19, 43 ,0.94),
+            rgba(4, 7, 19, 0.96)
+            );
+    boarder: 1px solid rgba(67, 222, 255, 0.4);
+    boarder-radius: 18px;
+    box-shadow:
+        0 0 70px rgba(0, 180, 255, 0.13),
+        inset 0 0 35px rgba(90, 0, 255, 0.05);
+}
+/* =========================
+   LOGO
+========================= */
+.logo {
+    font-size: clamp(35px, 7vw, 70px);
+    font-weight: 900;
+    letter-spacing: 7px;
+    line-height: 0.95;
+    text-shadow:
+        0 0 25px rgba(44, 220, 255, 0.55);
+}
+.logo span {
+    diaplay: block;
+    color: #7999b9;
+    letter-spacing: 6px;
+    font-size: 11px;
+}
+/* =========================
+   INSTRUCTIONS
+========================= */
+.instructions {
+    margin: 0 auto 30px;
+    padding: 17px;
+    max-width: 340px;
+    color: #9db6cc;
+    line-height: 1.8;
+    font-size: 13px;
+    backgorund: rgba(255, 255, 255, 0.025);
+    boarder-radius: 10px;
+}
+.instructions b {
+    color: #dffaff;
+}
+/* =========================
+   BUTTON
+========================= */
+.mainBtn {
+    boarder: 0;
+    padding: 14px 28px;
+    boarder-radius: 8px;
+    color: #001019;
+    background:
+        linear-gradient(
+            90deg,
+            #3be8ff,
+            #72ffbd
+        );
+        font-weight: 900;
+        letter-spacing: 2px;
+        cursor: pointer;
+        box-shadow:
+            0 0 25px rgba(61, 229, 255, 0.22);
+            transition:
+                transform 0.15s,
+                box-shadow 0.15s;                
+}
+.mainBtn:hover {
+    transform: translateY(-2px);
+    box-shadow:
+        0 0 35px rgba(61, 229, 255, 0.45);        
+}
+/* =========================
+   GAME OVER
+========================= */
+.panel > p {
+    color: #9fb3c9;
+    magin-buttom: 10px;
+}
+#finalScore,
+#victoryScore {
+    font-size: 48px;
+    color: #4de8ff;
+    margin:8px 0 22px;
+    test-shadow:
+        0 0 22px rgba(77, 232, 255, 0.4);
+}
+#recordText {
+    color: #7dffb2;
+    min-height: 20px;
+    margin-bottom: 20px;
+}
+/* =========================
+   BOSS
+========================= */
+#bossBar {
+    position:absolute;
+    z-index: 11;
+    top: 85px;
+    left: 50%;
+    width: min(520px, 60vw);
+    transform: translateX(-50%);
+    text-align: center;
+}
+.bossTitle {
+    margin-bottom: 7px;
+    color:#ff718d;
+    font-weight: 900;
+    letter-spacing: 4px;
+    font-size: 12px;
+    text-shadow:
+        0 0 12px #ff345b;
+}
+.bossHealth {
+    height: 12px;
+    border: 1px solid rgba(255, 78, 111, 0.45);
+}
+#bossHealthFill {
+    background:
+        linear-gradient(
+            90deg,
+            #ff315b,
+            #ffae65
+        );
+    box-shadow:
+        0 0 12px #ff315b;
+}
+/* =========================
+   TOAST
+========================= */
+#toast {
+    position: absolute;
+    left: 50%;
+    bottom: 9%;
+    transform: translateX(-50%, 20px);
+    z-index: 15;
+    opacity: 0;
+    pointer-events: none;
+}
