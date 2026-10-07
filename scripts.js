@@ -363,7 +363,107 @@ function explosionSound(big = false) {
 function powerUpSound() {
     sound(450, 0.08, "sine", 0.035, 200);
     setTimeout(() => {
-        
+        sound(
+            700,
+            0.12,
+            "sine",
+            0.03,
+            250
+        );
+    }, 50);
+}
+function bossSound() {
+    sound(
+        80,
+        0.5,
+        "sawtooth"
+        0.06,
+        30
+    );
+}
+// ============================================================
+// 7. STARFIELD
+// ============================================================
+
+const stars = [];
+
+function createStars() {
+    starts.length = 0;
+
+    const amount =
+    Math.floor(
+        WIDTH * HEIGHT / 6500
+    );
+    for (let i = 0; i <amount; i++) {
+        stars.push({
+            x: random(0, WIDTH),
+            y: random(0, HEIGHT),
+            size: random(0.4, 2.2),
+            speed: random(15, 90),
+            alpha: random(0.25, 1),
+            twinkle: random(1, 4),
+            phase: random(0, Math.PI * 2)
+        });
     }
-)
+}
+
+function updateStars(delta) {
+    for (const star of starts) {
+
+        start.y +=
+        star.speed *
+        delta *
+        (game.running ? 1 : 0.15);
+         if (star.y > HEIGHT) {
+            star.y = -5;
+            star.x = random(
+
+                0,
+                WIDTH
+            );
+         }
+    }
+}
+function drawStars() {
+    for (const start of stars) {
+        const alpha =
+        clamp(
+            start.alpha +
+            Math.sin(
+                game.elapsed *
+                star.twinklw +
+                star.phase
+            ) * 0.2,
+            0.05,
+            1
+        );
+        ctx.globalAlpha = alpha;
+        ctx.fillStyle = "#d8f6ff";
+        ctx.fillRect(
+            star.x,
+            star.y,
+            star.size,
+            star.size
+        );
+    }
+    ctx.globalAlpha = 1;
+}
+// ============================================================
+// 8. BACKGROUND
+// ============================================================
+function drawBackground() {
+    ctx.fillStyle = "#02040d";
+    ctx.fillRect(
+        0,
+        0,
+        WIDTH,
+        HEIGHT
+    );
+
+    const gradient1 =
+    ctx.createRadialGradient(
+        0,   
+        "rgba(30,80,180,0.14)"
+    );
+    gradient1
 }
