@@ -132,3 +132,238 @@ const game = {
     startTime: 0,,
     difficulty: 1
 };
+// ============================================================
+// 4. INPUT
+// ============================================================
+
+const keys = {};
+
+const mouse = {
+    x: WIDTH / 2,
+    y: HEIGHT - 100,
+    down: false,
+    active: false 
+};
+
+window.addEventListener("keydown", event => {
+    keys[event.key] = true;
+    if(
+        [
+            "ArrowUp",
+            "ArrowDown",
+            "ArrowLeft",
+            "ArrowRight",
+            " "
+        ].includes(event.key)
+    ) {
+        event.preventDefault();
+    }
+    if (event.key.toLowerCase() === "p") {
+        togglePause();   
+    }
+    if (event.key === "Escape") {
+        togglePause();
+    } 
+});
+window.addEventListener("keyup", event => {
+    keys[event.key] = false;
+});
+// ============================================================
+// MOUSE INPUT
+// ============================================================
+
+canvas.addEventListener("mousemove",event => {
+    const rect = canvas.getBoundingClientRect();
+
+    mouse.x = event.clientX - rect.left;
+    mouse.y = event.clientY - rect.top;
+
+    mouse.active = true;
+});
+
+canvas.addEventListener("mousedown", () => {
+    initializeAudio();
+
+    mouse.down = true;
+    mouse.active = true;
+});
+
+window.addEventListener("mouseup", () => {
+    mouse.down = false;
+});
+
+// ============================================================
+// TOUCH INPUT
+// ============================================================
+
+canvas.addEventListener(
+    "touchstart",
+    event => {
+
+        event.preventDefault();
+
+        initializeAudio();
+
+        const touch = event.touches[0];
+
+        const rect = canvas.getBoundingClientRect();
+
+        mouse.x = touch.clientX - rect.left;
+        mouse.y = touch.clientY - rect.top;
+
+        mouse.down = true;
+        mouse.active = true;
+    },
+    { passive: false }
+);
+
+canvas.addEventListener(
+    "touchmove",
+    event => {
+
+        event.preventDefault();
+
+        const touch = event.touches[0];
+
+        const rect = canvas.getBoundingClientReact();
+
+        mouse.x = touch.clientX - rect.left;
+        mouse.y = touch.clientY - rect.top;
+    },
+    { passive: false }
+);
+
+canvas.addEventListener(
+    "touchend",
+    event => {
+
+        event.preventDefault();
+
+        mouse.down = false;
+    },
+    { passive: false }
+);
+
+// ============================================================
+// 5. UTILITY FUNCTIONS
+// ============================================================
+
+function random(min, max) {
+    return Math.random() * (max - min) + min;
+}
+function randomInt(min, max) {
+    return Math.floor(random(min, max + 1));
+}
+function clamp(value, min, max) {
+    return Math.max(min, Math.min(max, value));
+}
+function distance(x1, y1, x2) {
+    return Math.hypot(x1 - x2, y1 - y2);
+}
+function lerp(a, b, t) {
+    return a + (b - a) * t;
+}
+function lerp(a, b, t) {
+    return a + (b - a) * t;
+}
+function angleBetween(x1, y1, x2, y2) {
+    return Math.atan2(y2 - y1, x2 - x1);
+}
+function removeDeal(array) {
+    for (let i = array.length -1; i >= 0; i--) {
+        if (
+            array[i].dead ||
+            array[i].life <= 0
+        ){
+            array.splice(i, 1);
+        }
+    }
+}
+function circleCollection(a, b) {
+    return distance(
+        a.x,
+        a.y,
+        b.x,
+        b.y
+    ) < a.radius + b.radius;
+}
+// ============================================================
+// 6. AUDIO SYSTEM
+// ============================================================
+
+let audioContext = null;
+function initializeAudio() {
+    if (!audioContex) {
+      try{
+        audioContext = 
+        new(
+            window.AudioContext ||
+            window.webkitAudioContext
+        )();
+      } catch (error) {
+        audioContext = null;
+      }
+    }
+    if(
+        audioContext &&
+        audioContext.state === "suspended"
+    ) {
+        audioContext.resume();
+    }
+}
+function sound(
+    frequency,
+    duration,
+    type = "sine"
+    volume = 0.03,
+    slide = 0
+){
+    if (!audioContext) {
+        return;
+    }
+    const oscillator =
+         audioContext.createOscillator();
+
+    const gain =
+         audioContext.createGain();
+    oscillator.type = type;
+    oscillator.frequency.exponentialRampToValueAtTime(
+        Math.max(30, frequency + slide),
+        audioContext.currentTime + duration
+    );
+    
+    gain.gain.setValueAtTime(
+        volume,
+        audioContext.currentTime
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+        0.001,
+        audioContext.currentTime + duration
+    );
+    oscillator.connect(gain);
+    gain.connect(audioContext.destination);
+    oscillator.start();
+    oscillator.stop(
+        audioContext.currentTime + duration
+    );
+}
+function shootSound() {
+    sound(600, 0.05, "square", 0.025, -200);
+}
+function explosionSound(big = false) {
+    sound(
+        big ? 65 : 100,
+        big ? 0.35 : 0.15,
+        "sawtooth",
+        big ? 0.055 : 0.03,
+        -50
+    );
+}
+function powerUpSound() {
+    sound(450, 0.08, "sine", 0.035, 200);
+    setTimeout(() => {
+        
+    }
+)
+}
