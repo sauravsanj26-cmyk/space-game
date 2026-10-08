@@ -462,8 +462,142 @@ function drawBackground() {
 
     const gradient1 =
     ctx.createRadialGradient(
-        0,   
+       WIDTH * 0.2,
+       HEIGHT * 0.3
+       0,
+       WIDTH * 0.2,
+       HEIGHT * 0.3,
+       WIDTH * 0.55
+    );
+    gradient1.addColorStop(
+        0,
         "rgba(30,80,180,0.14)"
     );
-    gradient1
+    gradient1.addColorStop(
+        1,
+        "rgba(30,80,180,0.14)"
+    );
+    ctx.fillStyle = gradient1;
+    ctx.fillRect(
+        0,
+        0,
+        WIDTH,
+        HEIGHT
+    );
+    const gradient2 =
+    ctx.createRadialGradient(
+        WIDTH * 0.8,
+        HEIGHT * 0.7
+        0,
+        WIDTH * 0.8
+        HEIGHT * 0.7
+        WIDTH * 0.5
+    );
+    gradient2.addColorStop(
+        0,
+        "rgba(130,30,160,0.1)"
+    );
+    gradient2.addColorStop(
+        1,
+        "rgba(130,30,160,0)"
+    );
+    ctx.fillRect(
+        0,
+        0,
+        WIDTH,
+        HEIGHT
+    );
+    drawStars();
 }
+// ============================================================
+// 9. PARTICLE SYSTEM
+// ============================================================
+class Particle {
+    constructor(
+        x,
+        y,
+        options = {}
+    ){
+        this.x = x;
+        this.y = y;
+        this.vx =
+        options.vx ??
+        random(-100, 100);
+        this.vy =
+        options.vy ??
+        random(-100, 100);
+
+        this.size =
+        options.size ??
+        random(1, 4);
+
+        this.color =
+        options.color ??
+        "#58eaff";
+
+        this.life =
+        options.life ??
+        random(0.3, 0.8);
+
+        this.maxLife = this.life;
+
+        this.gravity =
+        options.gravity ??
+        0;
+
+        this.drag =
+        options.drag ??
+        0.97;
+    }
+    update(delta) {
+        this.vx *=
+        Math.pow(
+            this.drag,
+            delta * 60
+        );
+        this.vy *=
+        Math.pow(
+            this.drag,
+            delta * 60
+        );
+        this.vy +=
+        this.gravity * delta;
+
+        this.x +=
+        this.vx * delta;
+
+        this.y +=
+        this.vy * delta;
+
+        this.life -= delta;
+    }
+    draw() {
+        const alpha =
+        clamp(
+            this.life /
+            this.maxLife,
+            0,
+            1
+        );
+        ctx.save();
+        ctx.fillStyle = 
+        this.color;
+
+        ctx.shadowBlur = 8;
+         
+        ctx.shadowColor =
+        this.color;
+
+        ctx.beginPath();
+
+        ctx.arc(
+            this.x,
+            this.y,
+            this.size * alpha,
+            0,
+            Math.PI * 2
+        );
+        ctx.fill();
+    }
+}
+const particles = [];
